@@ -18,7 +18,8 @@
         "docs": "jsdoc2md index.js lib/* > API.md",
         "format": "node_modules/.bin/prettier '**/*.{js,json}' --write",
         "lint": "node_modules/.bin/eslint '**/*.js'",
-        "test": "make test"
+        "test-win": "make test-win",
+        "test-linux": "make test-linux"
     },
     "repository": {
         "type": "git",
@@ -42,10 +43,9 @@
         "url": "https://github.com/kylefarris/clamscan/issues"
     },
     "devDependencies": {
-        "axios": "^1.2.0",
-        "chai": "^4.4.1",
+        "axios": "^1.6.8",
         "chai-as-promised": "^7.1.1",
-        "jsdoc-to-markdown": "^8.0.0",
-        "mocha": "^10.1.0"
+        "jsdoc-to-markdown": "^8.0.1",
+        "mocha": "^10.4.0"
     }
 }
