@@ -1987,7 +1987,12 @@ class NodeClam {
             // Get all files recursively using `scanFiles`
             if (this.settings.scanRecursively === true && (typeof fileCb === 'function' || !hasCb)) {
                 try {
-                    const { stdout, stderr } = await cpExecFile('find', [path]);
+                    let stdout, stderr;
+                    if (os.platform() === 'win32') {
+                        ({ stdout, stderr } = await cpExecFile('cmd', ['/c', 'dir', path, '/s', '/b']));
+                    } else {
+                        ({ stdout, stderr } = await cpExecFile('find', [path]));
+                    }
 
                     if (stderr) {
                         if (this.settings.debugMode) console.log(`${this.debugLabel}: `, stderr);
@@ -1998,8 +2003,7 @@ class NodeClam {
 
                     const files = stdout
                         .trim()
-                        .split(os.EOL)
-                        .map((p) => p.replace(/ /g, '\\ ').trim());
+                        .split(os.EOL);
                     const { goodFiles, badFiles, viruses, errors } = await this.scanFiles(files, null, null);
                     return hasCb
                         ? endCb(null, goodFiles, badFiles, viruses)
@@ -2027,7 +2031,7 @@ class NodeClam {
                 }
             }
 
-            // If you don't care about individual file progress (which is very slow for clamscan but fine for clamdscan...)
+                // If you don't care about individual file progress (which is very slow for clamscan but fine for clamdscan...)
             // NOTE: This section WILL scan recursively
             else if (typeof fileCb !== 'function' || !hasCb) {
                 // Scan locally via socket (either TCP or Unix socket)
@@ -2094,7 +2098,7 @@ class NodeClam {
                     }
                 }
 
-                // Scan path recursively using remote host/port and TCP protocol (must stream every single file to it...)
+                    // Scan path recursively using remote host/port and TCP protocol (must stream every single file to it...)
                 // WARNING: This is going to be really slow
                 else if (this.settings.clamdscan.port && !this._isLocalHost()) {
                     const results = [];
