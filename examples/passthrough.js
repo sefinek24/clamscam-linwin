@@ -6,7 +6,7 @@ const { promisify } = require('util');
 const fsUnlink = promisify(fs.unlink);
 
 // const fakeVirusUrl = 'https://secure.eicar.org/eicar_com.txt';
-const normalFileUrl = 'https://raw.githubusercontent.com/kylefarris/clamscan/sockets/README.md';
+const normalFileUrl = 'https://raw.githubusercontent.com/sefinek24/clamscam-linwin/sockets/README.md';
 // const largeFileUrl = 'http://speedtest-ny.turnkeyinternet.net/100mb.bin';
 const passthruFile = `${__dirname}/output`;
 

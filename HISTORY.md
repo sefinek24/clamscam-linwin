@@ -331,4 +331,4 @@ All sockets clients should now close when they are done being used, fail, or tim
 
 ## Newer Versions
 
-Please see the [GitHub Release page](https://github.com/kylefarris/clamscan/releases) for this project to see changelog info starting with v2.0.0.
+Please see the [GitHub Release page](https://github.com/sefinek24/clamscam-linwin/releases) for this project to see changelog info starting with v2.0.0.

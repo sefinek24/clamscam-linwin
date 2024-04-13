@@ -1,6 +1,6 @@
 # NodeJS Clamscan Virus Scanning Utility
 
-[![NPM Version][npm-version-image]][npm-url] [![NPM Downloads][npm-downloads-image]][npm-url] [![Node.js Version][node-image]][node-url] [![Test Suite](https://github.com/kylefarris/clamscan/actions/workflows/test.yml/badge.svg)](https://github.com/kylefarris/clamscan/actions/workflows/test.yml)
+[![NPM Version][npm-version-image]][npm-url] [![NPM Downloads][npm-downloads-image]][npm-url] [![Node.js Version][node-image]][node-url] [![Test Suite](https://github.com/sefinek24/clamscam-linwin/actions/workflows/test.yml/badge.svg)](https://github.com/sefinek24/clamscam-linwin/actions/workflows/test.yml)
 
 Use Node JS to scan files on your server with ClamAV's clamscan/clamdscan binary or via TCP to a remote server or local UNIX Domain socket. This is especially useful for scanning uploaded files provided by un-trusted sources.
 
@@ -12,7 +12,7 @@ All older versions in NPM have been deprecated.
 
 # Version 1.0.0 Information
 
-If you are migrating from v0.8.5 or less to v1.0.0 or greater, please read the [release notes](https://github.com/kylefarris/clamscan/releases/tag/v1.0.0) as there are some breaking changes (but also some awesome new features!).
+If you are migrating from v0.8.5 or less to v1.0.0 or greater, please read the [release notes](https://github.com/sefinek24/clamscam-linwin/releases/tag/v1.0.0) as there are some breaking changes (but also some awesome new features!).
 
 # Table of Contents
 
@@ -239,7 +239,7 @@ some_function();
 
 # API
 
-Complete/functional examples for various use-cases can be found in the [examples folder](https://github.com/kylefarris/clamscan/tree/master/examples).
+Complete/functional examples for various use-cases can be found in the [examples folder](https://github.com/sefinek24/clamscam-linwin/tree/master/examples).
 
 <a name="getVersion"></a>
 
@@ -662,5 +662,5 @@ Got a missing feature you'd like to use? Found a bug? Go ahead and fork this rep
 [npm-downloads-image]: https://img.shields.io/npm/dm/clamscan.svg
 [npm-url]: https://npmjs.org/package/clamscan
 [npm-version-image]: https://img.shields.io/npm/v/clamscan.svg
-[travis-image]: https://img.shields.io/travis/kylefarris/clamscan/master.svg
-[travis-url]: https://travis-ci.org/kylefarris/clamscan
+[travis-image]: https://img.shields.io/travis/sefinek24/clamscam-linwin/master.svg
+[travis-url]: https://travis-ci.org/sefinek24/clamscam-linwin

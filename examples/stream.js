@@ -3,7 +3,7 @@ const { PassThrough } = require('stream');
 const axios = require('axios');
 
 const fakeVirusUrl = 'https://secure.eicar.org/eicar_com.txt';
-// const normalFileUrl = 'https://raw.githubusercontent.com/kylefarris/clamscan/sockets/README.md';
+// const normalFileUrl = 'https://raw.githubusercontent.com/sefinek24/clamscam-linwin/sockets/README.md';
 const testUrl = fakeVirusUrl;
 
 // Initialize the clamscan module

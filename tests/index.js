@@ -24,7 +24,7 @@ const badScanFile = `${badScanDir}/bad_file_1.txt`;
 const badFileList = `${__dirname}/bad_files_list.txt`;
 const mixedScanDir = `${__dirname}/mixed_scan_dir`;
 const passthruFile = `${__dirname}/output`;
-const noVirusUrl = 'https://raw.githubusercontent.com/kylefarris/clamscan/master/README.md';
+const noVirusUrl = 'https://raw.githubusercontent.com/sefinek24/clamscam-linwin/master/README.md';
 const fakeVirusFalseNegatives = [
 	'eicar: OK.exe',
 	'OK.exe',
@@ -1591,7 +1591,7 @@ describe('passthrough', () => {
 		});
 	});
 
-	// https://github.com/kylefarris/clamscan/issues/82
+	// https://github.com/sefinek24/clamscam-linwin/issues/82
 	it('should not throw multiple callback error', (done) => {
 		// To reliably reproduce the issue in the broken code, it's important that this is an async generator
 		// and it emits some chunks larger than the default highWaterMark of 16 KB.
