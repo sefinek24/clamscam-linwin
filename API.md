@@ -36,8 +36,7 @@ NodeClam class definition. To cf
 <a name="new_NodeClam_new"></a>
 
 ### new NodeClam()
-This sets up all the defaults of the instance but does not
-necessarily return an initialized instance. Use `.init` for that.
+This sets up all the defaults of the instance but does notnecessarily return an initialized instance. Use `.init` for that.
 
 <a name="NodeClam+init"></a>
 
@@ -79,34 +78,7 @@ Initialization method.
 
 **Example**  
 ```js
-const NodeClam = require('clamscan');
-const ClamScan = new NodeClam().init({
-    removeInfected: false,
-    quarantineInfected: false,
-    scanLog: null,
-    debugMode: false,
-    fileList: null,
-    scanRecursively: true,
-    clamscan: {
-        path: '/usr/bin/clamscan',
-        db: null,
-        scanArchives: true,
-        active: true
-    },
-    clamdscan: {
-        socket: false,
-        host: false,
-        port: false,
-        timeout: 60000,
-        localFallback: false,
-        path: '/usr/bin/clamdscan',
-        configFile: null,
-        multiscan: true,
-        reloadDb: false,
-        active: true,
-        bypassTest: false,
-    },
-    preference: 'clamdscan'
+const NodeClam = require('clamscan');const ClamScan = new NodeClam().init({    removeInfected: false,    quarantineInfected: false,    scanLog: null,    debugMode: false,    fileList: null,    scanRecursively: true,    clamscan: {        path: '/usr/bin/clamscan',        db: null,        scanArchives: true,        active: true    },    clamdscan: {        socket: false,        host: false,        port: false,        timeout: 60000,        localFallback: false,        path: '/usr/bin/clamdscan',        configFile: null,        multiscan: true,        reloadDb: false,        active: true,        bypassTest: false,    },    preference: 'clamdscan'
      });
 ```
 <a name="NodeClam+reset"></a>
@@ -136,23 +108,12 @@ Establish the clamav version of a local or remote clamav daemon.
 
 **Example**  
 ```js
-// Callback example
-clamscan.getVersion((err, version) => {
-    if (err) return console.error(err);
-    console.log(`ClamAV Version: ${version}`);
-});
-
-// Promise example
-const clamscan = new NodeClam().init();
-const version = await clamscan.getVersion();
-console.log(`ClamAV Version: ${version}`);
+// Callback exampleclamscan.getVersion((err, version) => {    if (err) return console.error(err);    console.log(`ClamAV Version: ${version}`);});// Promise exampleconst clamscan = new NodeClam().init();const version = await clamscan.getVersion();console.log(`ClamAV Version: ${version}`);
 ```
 <a name="NodeClam+isInfected"></a>
 
 ### nodeClam.isInfected(file, [cb]) ⇒ <code>Promise.&lt;object&gt;</code>
-This method allows you to scan a single file. It supports a callback and Promise API.
-If no callback is supplied, a Promise will be returned. This method will likely
-be the most common use-case for this module.
+This method allows you to scan a single file. It supports a callback and Promise API.If no callback is supplied, a Promise will be returned. This method will likelybe the most common use-case for this module.
 
 **Kind**: instance method of [<code>NodeClam</code>](#NodeClam)  
 **Returns**: <code>Promise.&lt;object&gt;</code> - Object like: `{ file: String, isInfected: Boolean, viruses: Array }`  
@@ -164,82 +125,18 @@ be the most common use-case for this module.
 
 **Example**  
 ```js
-// Callback Example
-clamscan.isInfected('/a/picture/for_example.jpg', (err, file, isInfected, viruses) => {
-    if (err) return console.error(err);
-
-    if (isInfected) {
-        console.log(`${file} is infected with ${viruses.join(', ')}.`);
-    }
-});
-
-// Promise Example
-clamscan.isInfected('/a/picture/for_example.jpg').then(result => {
-    const {file, isInfected, viruses} =  result;
-    if (isInfected) console.log(`${file} is infected with ${viruses.join(', ')}.`);
-}).then(err => {
-    console.error(err);
-});
-
-// Async/Await Example
-const {file, isInfected, viruses} = await clamscan.isInfected('/a/picture/for_example.jpg');
+// Callback Exampleclamscan.isInfected('/a/picture/for_example.jpg', (err, file, isInfected, viruses) => {    if (err) return console.error(err);    if (isInfected) {        console.log(`${file} is infected with ${viruses.join(', ')}.`);    }});// Promise Exampleclamscan.isInfected('/a/picture/for_example.jpg').then(result => {    const {file, isInfected, viruses} =  result;    if (isInfected) console.log(`${file} is infected with ${viruses.join(', ')}.`);}).then(err => {    console.error(err);});// Async/Await Exampleconst {file, isInfected, viruses} = await clamscan.isInfected('/a/picture/for_example.jpg');
 ```
 <a name="NodeClam+passthrough"></a>
 
 ### nodeClam.passthrough() ⇒ <code>Transform</code>
-Returns a PassthroughStream object which allows you to
-pipe a ReadbleStream through it and on to another output. In the case of this
-implementation, it's actually forking the data to also
-go to ClamAV via TCP or Domain Sockets. Each data chunk is only passed on to
-the output if that chunk was successfully sent to and received by ClamAV.
-The PassthroughStream object returned from this method has a special event
-that is emitted when ClamAV finishes scanning the streamed data (`scan-complete`)
-so that you can decide if there's anything you need to do with the final output
-destination (ex. delete a file or S3 object).
+Returns a PassthroughStream object which allows you topipe a ReadbleStream through it and on to another output. In the case of thisimplementation, it's actually forking the data to alsogo to ClamAV via TCP or Domain Sockets. Each data chunk is only passed on tothe output if that chunk was successfully sent to and received by ClamAV.The PassthroughStream object returned from this method has a special eventthat is emitted when ClamAV finishes scanning the streamed data (`scan-complete`)so that you can decide if there's anything you need to do with the final outputdestination (ex. delete a file or S3 object).
 
 **Kind**: instance method of [<code>NodeClam</code>](#NodeClam)  
 **Returns**: <code>Transform</code> - A Transform stream for piping a Readable stream into  
 **Example**  
 ```js
-const NodeClam = require('clamscan');
-
-// You'll need to specify your socket or TCP connection info
-const clamscan = new NodeClam().init({
-    clamdscan: {
-        socket: '/var/run/clamd.scan/clamd.sock',
-        host: '127.0.0.1',
-        port: 3310,
-    }
-});
-
-// For example's sake, we're using the Axios module
-const axios = require('axios');
-
-// Get a readable stream for a URL request
-const input = axios.get(someUrl);
-
-// Create a writable stream to a local file
-const output = fs.createWriteStream(someLocalFile);
-
-// Get instance of this module's PassthroughStream object
-const av = clamscan.passthrough();
-
-// Send output of Axios stream to ClamAV.
-// Send output of Axios to `someLocalFile` if ClamAV receives data successfully
-input.pipe(av).pipe(output);
-
-// What happens when scan is completed
-av.on('scan-complete', result => {
-   const {isInfected, viruses} = result;
-   // Do stuff if you want
-});
-
-// What happens when data has been fully written to `output`
-output.on('finish', () => {
-    // Do stuff if you want
-});
-
-// NOTE: no errors (or other events) are being handled in this example but standard errors will be emitted according to NodeJS's Stream specifications
+const NodeClam = require('clamscan');// You'll need to specify your socket or TCP connection infoconst clamscan = new NodeClam().init({    clamdscan: {        socket: '/var/run/clamd.scan/clamd.sock',        host: '127.0.0.1',        port: 3310,    }});// For example's sake, we're using the Axios moduleconst axios = require('axios');// Get a readable stream for a URL requestconst input = axios.get(someUrl);// Create a writable stream to a local fileconst output = fs.createWriteStream(someLocalFile);// Get instance of this module's PassthroughStream objectconst av = clamscan.passthrough();// Send output of Axios stream to ClamAV.// Send output of Axios to `someLocalFile` if ClamAV receives data successfullyinput.pipe(av).pipe(output);// What happens when scan is completedav.on('scan-complete', result => {   const {isInfected, viruses} = result;   // Do stuff if you want});// What happens when data has been fully written to `output`output.on('finish', () => {    // Do stuff if you want});// NOTE: no errors (or other events) are being handled in this example but standard errors will be emitted according to NodeJS's Stream specifications
 ```
 <a name="NodeClam+scanFile"></a>
 
@@ -257,13 +154,7 @@ Just an alias to `isInfected`. See docs for that for usage examples.
 <a name="NodeClam+scanFiles"></a>
 
 ### nodeClam.scanFiles(files, [endCb], [fileCb]) ⇒ <code>Promise.&lt;object&gt;</code>
-Scans an array of files or paths. You must provide the full paths of the
-files and/or paths. Also enables the ability to scan a file list.
-
-This is essentially a wrapper for isInfected that simplifies the process
-of scanning many files or directories.
-
-**NOTE:** The only way to get per-file notifications is through the callback API.
+Scans an array of files or paths. You must provide the full paths of thefiles and/or paths. Also enables the ability to scan a file list.This is essentially a wrapper for isInfected that simplifies the processof scanning many files or directories.**NOTE:** The only way to get per-file notifications is through the callback API.
 
 **Kind**: instance method of [<code>NodeClam</code>](#NodeClam)  
 **Returns**: <code>Promise.&lt;object&gt;</code> - Object like: `{ goodFiles: Array, badFiles: Array, errors: Object, viruses: Array }`  
@@ -276,51 +167,12 @@ of scanning many files or directories.
 
 **Example**  
 ```js
-// Callback Example
-const scanStatus = {
-    good: 0,
-    bad: 0
-};
-const files = [
-    '/path/to/file/1.jpg',
-    '/path/to/file/2.mov',
-    '/path/to/file/3.rb'
-];
-clamscan.scanFiles(files, (err, goodFiles, badFiles, viruses) => {
-    if (err) return console.error(err);
-    if (badFiles.length > 0) {
-        console.log({
-            msg: `${goodFiles.length} files were OK. ${badFiles.length} were infected!`,
-            badFiles,
-            goodFiles,
-            viruses,
-        });
-    } else {
-        res.send({msg: "Everything looks good! No problems here!."});
-    }
-}, (err, file, isInfected, viruses) => {
-    ;(isInfected ? scanStatus.bad++ : scanStatus.good++);
-    console.log(`${file} is ${(isInfected ? `infected with ${viruses}` : 'ok')}.`);
-    console.log('Scan Status: ', `${(scanStatus.bad + scanStatus.good)}/${files.length}`);
-});
-
-// Async/Await method
-const {goodFiles, badFiles, errors, viruses} = await clamscan.scanFiles(files);
+// Callback Exampleconst scanStatus = {    good: 0,    bad: 0};const files = [    '/path/to/file/1.jpg',    '/path/to/file/2.mov',    '/path/to/file/3.rb'];clamscan.scanFiles(files, (err, goodFiles, badFiles, viruses) => {    if (err) return console.error(err);    if (badFiles.length > 0) {        console.log({            msg: `${goodFiles.length} files were OK. ${badFiles.length} were infected!`,            badFiles,            goodFiles,            viruses,        });    } else {        res.send({msg: "Everything looks good! No problems here!."});    }}, (err, file, isInfected, viruses) => {    ;(isInfected ? scanStatus.bad++ : scanStatus.good++);    console.log(`${file} is ${(isInfected ? `infected with ${viruses}` : 'ok')}.`);    console.log('Scan Status: ', `${(scanStatus.bad + scanStatus.good)}/${files.length}`);});// Async/Await methodconst {goodFiles, badFiles, errors, viruses} = await clamscan.scanFiles(files);
 ```
 <a name="NodeClam+scanDir"></a>
 
 ### nodeClam.scanDir(path, [endCb], [fileCb]) ⇒ <code>Promise.&lt;object&gt;</code>
-Scans an entire directory. Provides 3 params to end callback: Error, path
-scanned, and whether its infected or not. To scan multiple directories, pass
-them as an array to the `scanFiles` method.
-
-This obeys your recursive option even for `clamdscan` which does not have a native
-way to turn this feature off. If you have multiple paths, send them in an array
-to `scanFiles`.
-
-NOTE: While possible, it is NOT advisable to use the `fileCb` parameter when
-using the `clamscan` binary. Doing so with `clamdscan` is okay, however. This
-method also allows for non-recursive scanning with the clamdscan binary.
+Scans an entire directory. Provides 3 params to end callback: Error, pathscanned, and whether its infected or not. To scan multiple directories, passthem as an array to the `scanFiles` method.This obeys your recursive option even for `clamdscan` which does not have a nativeway to turn this feature off. If you have multiple paths, send them in an arrayto `scanFiles`.NOTE: While possible, it is NOT advisable to use the `fileCb` parameter whenusing the `clamscan` binary. Doing so with `clamdscan` is okay, however. Thismethod also allows for non-recursive scanning with the clamdscan binary.
 
 **Kind**: instance method of [<code>NodeClam</code>](#NodeClam)  
 **Returns**: <code>Promise.&lt;object&gt;</code> - Object like: `{ path: String, isInfected: Boolean, goodFiles: Array, badFiles: Array, viruses: Array }`  
@@ -333,29 +185,12 @@ method also allows for non-recursive scanning with the clamdscan binary.
 
 **Example**  
 ```js
-// Callback Method
-clamscan.scanDir('/some/path/to/scan', (err, goodFiles, badFiles, viruses) {
-    if (err) return console.error(err);
-
-    if (badFiles.length > 0) {
-        console.log(`${path} was infected. The offending files (${badFiles.join (', ')}) have been quarantined.`);
-        console.log(`Viruses Found: ${viruses.join(', ')}`);
-    } else {
-        console.log('Everything looks good! No problems here!.');
-    }
-});
-
-// Async/Await Method
-const {path, isInfected, goodFiles, badFiles, viruses} = await clamscan.scanDir('/some/path/to/scan');
+// Callback Methodclamscan.scanDir('/some/path/to/scan', (err, goodFiles, badFiles, viruses) {    if (err) return console.error(err);    if (badFiles.length > 0) {        console.log(`${path} was infected. The offending files (${badFiles.join (', ')}) have been quarantined.`);        console.log(`Viruses Found: ${viruses.join(', ')}`);    } else {        console.log('Everything looks good! No problems here!.');    }});// Async/Await Methodconst {path, isInfected, goodFiles, badFiles, viruses} = await clamscan.scanDir('/some/path/to/scan');
 ```
 <a name="NodeClam+scanStream"></a>
 
 ### nodeClam.scanStream(stream, [cb]) ⇒ <code>Promise.&lt;object&gt;</code>
-Allows you to scan a binary stream.
-
-**NOTE:** This method will only work if you've configured the module to allow the
-use of a TCP or UNIX Domain socket. In other words, this will not work if you only
-have access to a local ClamAV binary.
+Allows you to scan a binary stream.**NOTE:** This method will only work if you've configured the module to allow theuse of a TCP or UNIX Domain socket. In other words, this will not work if you onlyhave access to a local ClamAV binary.
 
 **Kind**: instance method of [<code>NodeClam</code>](#NodeClam)  
 **Returns**: <code>Promise.&lt;object&gt;</code> - Object like: `{ file: String, isInfected: Boolean, viruses: Array } `  
@@ -367,39 +202,12 @@ have access to a local ClamAV binary.
 
 **Example**  
 ```js
-const NodeClam = require('clamscan');
-
-// You'll need to specify your socket or TCP connection info
-const clamscan = new NodeClam().init({
-    clamdscan: {
-        socket: '/var/run/clamd.scan/clamd.sock',
-        host: '127.0.0.1',
-        port: 3310,
-    }
-});
-const Readable = require('stream').Readable;
-const rs = Readable();
-
-rs.push('foooooo');
-rs.push('barrrrr');
-rs.push(null);
-
-// Callback Example
-clamscan.scanStream(stream, (err, isInfected) => {
-    if (err) return console.error(err);
-    if (isInfected) return console.log('Stream is infected! Booo!');
-    console.log('Stream is not infected! Yay!');
-});
-
-// Async/Await Example
-const { isInfected, viruses } = await clamscan.scanStream(stream);
+const NodeClam = require('clamscan');// You'll need to specify your socket or TCP connection infoconst clamscan = new NodeClam().init({    clamdscan: {        socket: '/var/run/clamd.scan/clamd.sock',        host: '127.0.0.1',        port: 3310,    }});const Readable = require('stream').Readable;const rs = Readable();rs.push('foooooo');rs.push('barrrrr');rs.push(null);// Callback Exampleclamscan.scanStream(stream, (err, { isInfected, viruses }) => {    if (err) return console.error(err);    if (isInfected) return console.log('Stream is infected! Booo!', viruses);    console.log('Stream is not infected! Yay!');});// Async/Await Exampleconst { isInfected, viruses } = await clamscan.scanStream(stream);
 ```
 <a name="NodeClamError"></a>
 
 ## NodeClamError
-Clamscan-specific extension of the Javascript Error object
-
-**NOTE**: If string is passed to first param, it will be `msg` and data will be `{}`
+Clamscan-specific extension of the Javascript Error object**NOTE**: If string is passed to first param, it will be `msg` and data will be `{}`
 
 **Kind**: global class  
 <a name="new_NodeClamError_new"></a>
@@ -416,8 +224,7 @@ Creates a new instance of a NodeClamError.
 <a name="NodeClamTransform"></a>
 
 ## NodeClamTransform
-A NodeClam - specific Transform extension that coddles
-chunks into the correct format for a ClamAV socket.
+A NodeClam - specific Transform extension that coddleschunks into the correct format for a ClamAV socket.
 
 **Kind**: global class  
 

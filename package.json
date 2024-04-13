@@ -16,8 +16,6 @@
     ],
     "scripts": {
         "docs": "jsdoc2md index.js lib/* > API.md",
-        "format": "node_modules/.bin/prettier '**/*.{js,json}' --write",
-        "lint": "node_modules/.bin/eslint '**/*.js'",
         "test-win": "make test-win",
         "test-linux": "make test-linux"
     },
