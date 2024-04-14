@@ -34,11 +34,11 @@ const fakeVirusFalseNegatives = [
 	' OK.exe',
 	'ok.exe',
 	'OK',
-].map((v) => `${badScanDir}/${v}`);
+].map(v => `${badScanDir}/${v}`);
 const eicarSignatureRgx = /eicar/i;
 
 const fsState = promisify(fs.stat);
-const fsReadfile = promisify(fs.readFile);
+const fsReadFile = promisify(fs.readFile);
 const fsCopyfile = promisify(fs.copyFile);
 
 chai.use(chaiAsPromised);
@@ -61,7 +61,7 @@ fs.writeFileSync(
 	modifiedGoodFileList,
 	goodFileListContents
 		.split('\n')
-		.map((v) => v.replace(/^\./, __dirname))
+		.map(v => v.replace(/^\./, __dirname))
 		.join('\n'),
 	'utf8',
 );
@@ -331,7 +331,7 @@ describe('_buildClamFlags', () => {
 				'--multiscan',
 				`--move=${config.quarantineInfected}`,
 				config.scanLog ? `--log=${config.scanLog}` : null,
-			].filter((v) => !!v);
+			].filter(v => !!v);
 			clamscan.clamFlags.should.be.eql(flags);
 		} else {
 			clamscan.clamFlags.should.be.eql(['--no-summary', `--log=${config.scanLog}`]);
@@ -726,7 +726,7 @@ describe('isInfected', () => {
 
 			try {
 				// Make copies of the test virus file and rename it to various possible false-negative names
-				await Promise.all([fakeVirusFalseNegatives.map((v) => fsCopyfile(badScanFile, v))]);
+				await Promise.all([fakeVirusFalseNegatives.map(v => fsCopyfile(badScanFile, v))]);
 
 				// Get list of all files to scan
 				const toScan = [].concat(fakeVirusFalseNegatives).concat([badScanFile]);
@@ -745,7 +745,7 @@ describe('isInfected', () => {
 				throw err;
 			} finally {
 				if (fs.existsSync(badScanFile)) fs.unlinkSync(badScanFile);
-				fakeVirusFalseNegatives.forEach((v) => {
+				fakeVirusFalseNegatives.forEach(v => {
 					if (fs.existsSync(v)) fs.unlinkSync(v);
 				});
 			}
@@ -1000,7 +1000,7 @@ describe('scanFiles', () => {
 					expect(goodFiles).to.be.empty;
 					expect(errorFiles).to.be.an('object');
 
-					const fileNames = Object.keys(errorFiles).map((v) => path.basename(v));
+					const fileNames = Object.keys(errorFiles).map(v => path.basename(v));
 					expect(fileNames).to.be.eql([
 						'wont_be_able_to_find_this_file.txt',
 						'wont_find_this_one_either.txt',
@@ -1224,8 +1224,8 @@ describe('scanDir', () => {
 
 		clamscan.scanDir(mixedScanDir, (err, goodFiles, badFiles, viruses) => {
 			check(done, () => {
-				const ignoreFiles = ['.DS_Store'].map((v) => `${mixedScanDir}/${v}`);
-				goodFiles = goodFiles.filter((v) => !ignoreFiles.includes(v));
+				const ignoreFiles = ['.DS_Store'].map(v => `${mixedScanDir}/${v}`);
+				goodFiles = goodFiles.filter(v => !ignoreFiles.includes(v));
 				console.log('Good Files: ', mixedScanDir, goodFiles);
 
 				expect(err, 'scanDir should not return error').to.not.be.instanceof(Error);
@@ -1567,7 +1567,7 @@ describe('passthrough', () => {
 		output.on('finish', () => {
 			Promise.all([
 				expect(fsState(passthruFile), 'get passthru file stats').to.not.be.rejectedWith(Error),
-				expect(fsReadfile(passthruFile), 'get passthru file').to.not.be.rejectedWith(Error),
+				expect(fsReadFile(passthruFile), 'get passthru file').to.not.be.rejectedWith(Error),
 			]).should.notify(() => {
 				if (fs.existsSync(passthruFile)) fs.unlinkSync(passthruFile);
 				done();

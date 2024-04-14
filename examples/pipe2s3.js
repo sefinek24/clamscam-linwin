@@ -294,7 +294,7 @@ async function pipe2s3(req, res, opts = {}) {
 
 				// Pipe stream through ClamAV and on to S3
 				file.pipe(av).pipe(s3UploadStream);
-			}).catch((e) => {
+			}).catch(e => {
 				logError(e);
 				reject(e);
 			});
