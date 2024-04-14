@@ -96,20 +96,20 @@ class NodeClam {
      * @param {boolean} [options.clamscan.active=true] - If true, this module will consider using the clamscan binary
      * @param {object} [options.clamdscan] - Options specific to the clamdscan binary
      * @param {string} [options.clamdscan.socket=false] - Path to socket file for connecting via TCP
-     * @param {string} [options.clamdscan.host=false] - IP of host to connec to TCP interface
+     * @param {string} [options.clamdscan.host=false] - IP of host to connect to TCP interface
      * @param {string} [options.clamdscan.port=false] - Port of host to use when connecting via TCP interface
      * @param {number} [options.clamdscan.timeout=60000] - Timeout for scanning files
-     * @param {boolean} [options.clamdscan.localFallback=false] - If false, do not fallback to a local binary-method of scanning
+     * @param {boolean} [options.clamdscan.localFallback=false] - If false, do not fall back to a local binary-method of scanning
      * @param {string} [options.clamdscan.path='/usr/bin/clamdscan'] - Path to the `clamdscan` binary on your server
-     * @param {string} [options.clamdscan.configFile=null] - Specify config file if it's in an usual place
+     * @param {string} [options.clamdscan.configFile=null] - Specify config file if it's in a usual place
      * @param {boolean} [options.clamdscan.multiscan=true] - If true, scan using all available cores
      * @param {boolean} [options.clamdscan.reloadDb=false] - If true, will re-load the DB on ever call (slow)
      * @param {boolean} [options.clamdscan.active=true] - If true, this module will consider using the `clamdscan` binary
-     * @param {boolean} [options.clamdscan.bypassTest=false] - If true, check to see if socket is avaliable
+     * @param {boolean} [options.clamdscan.bypassTest=false] - If true, check to see if socket is available
      * @param {boolean} [options.clamdscan.tls=false] - If true, connect to a TLS-Termination proxy in front of ClamAV
      * @param {object} [options.preference='clamdscan'] - If preferred binary is found and active, it will be used by default
      * @param {Function} [cb] - Callback method. Prototype: `(err, <instance of NodeClam>)`
-     * @returns {Promise<object>} An initated instance of NodeClam
+     * @returns {Promise<object>} An initiated instance of NodeClam
      * @example
      * const NodeClam = require('clamscan');
      * const ClamScan = new NodeClam().init({
@@ -169,7 +169,7 @@ class NodeClam {
 
 			if (this.settings && 'debugMode' in this.settings && this.settings.debugMode === true) console.log(`${this.debugLabel}: DEBUG MODE ON`);
 
-			// Backwards compatibilty section
+			// Backwards compatibility section
 			if ('quarantinePath' in this.settings && this.settings.quarantinePath) {
 				this.settings.quarantineInfected = this.settings.quarantinePath;
 			}
@@ -1247,7 +1247,7 @@ class NodeClam {
 									if (result.timeout === true) this.emit('timeout');
 
 									// NOTE: "scan-complete" could be called by the `handleError` method.
-									// We don't want to to double-emit this message.
+									// We don't want to double-emit this message.
 									if (_scanComplete === false) {
 										_scanComplete = true;
 										this._clamavSocket.end();
