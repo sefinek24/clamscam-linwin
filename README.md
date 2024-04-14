@@ -239,7 +239,7 @@ some_function();
 
 # API
 
-Complete/functional examples for various use-cases can be found in the [examples folder](https://github.com/sefinek24/clamscam-linwin/tree/master/examples).
+Complete/functional examples for various use-cases can be found in the [examples folder](https://github.com/sefinek24/clamscam-linwin/tree/main/examples).
 
 <a name="getVersion"></a>
 
@@ -660,7 +660,7 @@ Got a missing feature you'd like to use? Found a bug? Go ahead and fork this rep
 [node-image]: https://img.shields.io/node/v/clamscan.svg
 [node-url]: https://nodejs.org/en/download
 [npm-downloads-image]: https://img.shields.io/npm/dm/clamscan.svg
-[npm-url]: https://npmjs.org/package/clamscan
+[npm-url]: https://npmjs.org/package/clamscan-linwin
 [npm-version-image]: https://img.shields.io/npm/v/clamscan.svg
-[travis-image]: https://img.shields.io/travis/sefinek24/clamscam-linwin/master.svg
+[travis-image]: https://img.shields.io/travis/sefinek24/clamscam-linwin/main.svg
 [travis-url]: https://travis-ci.org/sefinek24/clamscam-linwin

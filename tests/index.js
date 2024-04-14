@@ -24,7 +24,7 @@ const badScanFile = `${badScanDir}/bad_file_1.txt`;
 const badFileList = `${__dirname}/bad_files_list.txt`;
 const mixedScanDir = `${__dirname}/mixed_scan_dir`;
 const passthruFile = `${__dirname}/output`;
-const noVirusUrl = 'https://raw.githubusercontent.com/sefinek24/clamscam-linwin/master/README.md';
+const noVirusUrl = 'https://raw.githubusercontent.com/sefinek24/clamscam-linwin/main/README.md';
 const fakeVirusFalseNegatives = [
 	'eicar: OK.exe',
 	'OK.exe',

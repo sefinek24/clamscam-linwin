@@ -1,6 +1,6 @@
 {
     "name": "clamscam-linwin",
-    "version": "2.2.2",
+    "version": "3.0.0",
     "author": "Kyle Farris <kyle.farris@infotechinc.com> (https://infotechinc.com)",
     "description": "Use Node JS to scan files on your server with ClamAV's clamscan/clamdscan binary or via TCP to a remote server or local UNIX Domain socket. This is especially useful for scanning uploaded files provided by un-trusted sources.",
     "main": "index.js",
@@ -12,10 +12,10 @@
         "Sjord <Sjoerd Langkemper>",
         "chris-maclean <Christopher Maclean>",
         "ngraef <Nick Graef>",
-        "caroneater <Gabriel Fournier>"
+        "caroneater <Gabriel Fournier>",
+        "Sefinek <contact@sefinek.net (https://sefinek.net)"
     ],
     "scripts": {
-        "docs": "jsdoc2md index.js lib/* > API.md",
         "test-win": "make test-win",
         "test-linux": "make test-linux"
     },
