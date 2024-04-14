@@ -110,7 +110,7 @@ class NodeClam {
      * @param {Function} [cb] - Callback method. Prototype: `(err, <instance of NodeClam>)`
      * @returns {Promise<object>} An initiated instance of NodeClam
      * @example
-     * const NodeClam = require('clamscan');
+     * const NodeClam = require('clamscam-linwin');
      * const ClamScan = new NodeClam().init({
      *     removeInfected: false,
      *     quarantineInfected: false,
@@ -1063,7 +1063,7 @@ class NodeClam {
      *
      * @returns {Transform} A Transform stream for piping a Readable stream into
      * @example
-     * const NodeClam = require('clamscan');
+     * const NodeClam = require('clamscam-linwin');
      *
      * // You'll need to specify your socket or TCP connection info
      * const clamscan = new NodeClam().init({
@@ -2003,7 +2003,7 @@ class NodeClam {
      * @param {Function} [cb] - What to do when the socket response with results
      * @returns {Promise<object>} Object like: `{ file: String, isInfected: Boolean, viruses: Array } `
      * @example
-     * const NodeClam = require('clamscan');
+     * const NodeClam = require('clamscam-linwin');
      *
      * // You'll need to specify your socket or TCP connection info
      * const clamscan = new NodeClam().init({

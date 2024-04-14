@@ -7,7 +7,7 @@ const fakeVirusUrl = 'https://secure.eicar.org/eicar_com.txt';
 const testUrl = fakeVirusUrl;
 
 // Initialize the clamscan module
-const NodeClam = require('../index.js'); // Offically: require('clamscan');
+const NodeClam = require('../index.js'); // Offically: require('clamscam-linwin');
 
 /**
  * Actually run the test.

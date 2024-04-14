@@ -15,7 +15,7 @@ const testUrl = normalFileUrl;
 // const testUrl = largeFileUrl;
 
 // Initialize the clamscan module
-const NodeClam = require('../index.js'); // Offically: require('clamscan');
+const NodeClam = require('../index.js'); // Offically: require('clamscam-linwin');
 
 /**
  * Removes whatever file was passed-through during the scan.

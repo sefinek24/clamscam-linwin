@@ -120,7 +120,7 @@ For some full-fledged examples of how the new API works, checkout the `/examples
 ##### Pre-1.0.0
 
 ```javascript
-const clamscan = require('clamscan')(options);
+const clamscan = require('clamscam-linwin')(options);
 ```
 
 ##### 1.0.0
@@ -128,7 +128,7 @@ const clamscan = require('clamscan')(options);
 **NOTE:** Due to the new asynchronous nature of the checks that are performed upon initialization of the module, the initialization method now returns a Promise instead of the actual instantiated object. Resolving the Promise with `then` will return the object like before.
 
 ```javascript
-const NodeClam = require('clamscan');
+const NodeClam = require('clamscam-linwin');
 const ClamScan = new NodeClam().init(options);
 ```
 
@@ -170,7 +170,7 @@ If you prefer the async/await style of coding:
 The only way to get results/errors in pre-1.0.0 was through callbacks.
 
 ```javascript
-const clamscan = require('clamscan')(options);
+const clamscan = require('clamscam-linwin')(options);
 clamscan.scan_dir('/path/to/directory', (err, good_files, bad_files) => {
     // Do stuff inside callback
 });

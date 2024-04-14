@@ -4,7 +4,7 @@
 const EventEmitter = require('events');
 const filesize = require('filesize');
 const { uuidv4 } = require('uuid');
-const NodeClam = require('clamscan');
+const NodeClam = require('clamscam-linwin');
 const BusBoy = require('busboy');
 const AWS = require('aws-sdk');
 

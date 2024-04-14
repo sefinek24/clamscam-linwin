@@ -1,10 +1,10 @@
-# NodeJS Clamscan Virus Scanning Utility
+# Node.js Clamscan Virus Scanning Utility
 
 [![NPM Version][npm-version-image]][npm-url] [![NPM Downloads][npm-downloads-image]][npm-url] [![Node.js Version][node-image]][node-url] [![Test Suite](https://github.com/sefinek24/clamscam-linwin/actions/workflows/test.yml/badge.svg)](https://github.com/sefinek24/clamscam-linwin/actions/workflows/test.yml)
 
-Use Node JS to scan files on your server with ClamAV's clamscan/clamdscan binary or via TCP to a remote server or local UNIX Domain socket. This is especially useful for scanning uploaded files provided by un-trusted sources.
+Use Node.js to scan files on your server with ClamAV's clamscan/clamdscan binary or via TCP to a remote server or local UNIX Domain socket. This is especially useful for scanning uploaded files provided by un-trusted sources.
 
-# !!IMPORTANT
+# !! IMPORTANT
 
 If you are using a version prior to 1.2.0, please upgrade! There was a security vulnerability in previous versions that can cause false negative in some edge cases. Specific details on how the attack could be implemented will not be disclosed here. Please update to 1.2.0 or greater ASAP. No breaking changes are included, only the security patch.
 
@@ -59,53 +59,43 @@ sudo brew install clamav
 ```
 
 ## To use ClamAV using TCP sockets
-
 You will need access to either:
 
 1. A local UNIX Domain socket for a local instance of `clamd`
-
-- Follow instructions in [To use local binary method of scanning](#user-content-to-use-local-binary-method-of-scanning).
-- Socket file is usually: `/var/run/clamd.scan/clamd.sock`
-- Make sure `clamd` is running on your local server
-
+   - Follow instructions in [To use local binary method of scanning](#user-content-to-use-local-binary-method-of-scanning).
+   - Socket file is usually: `/var/run/clamd.scan/clamd.sock`
+   - Make sure `clamd` is running on your local server
 2. A local/remote `clamd` daemon
-
-- Must know the port the daemon is running on
-- If running on remote server, you must have the IP address/domain name
-- If running on remote server, it's firewall must have the appropriate TCP port(s) open
-- Make sure `clamd` is running on your local/remote server
+   - Must know the port the daemon is running on
+   - If running on remote server, you must have the IP address/domain name
+   - If running on remote server, it's firewall must have the appropriate TCP port(s) open
+   - Make sure `clamd` is running on your local/remote server
 
 **NOTE:** This module is not intended to work on a Windows server. This would be a welcome addition if someone wants to add that feature (I may get around to it one day but have no urgent need for this).
 
 # How to Install
-
 ```bash
 npm install clamscan
 ```
 
 # License Info
-
 Licensed under the MIT License:
 
 - <http://www.opensource.org/licenses/mit-license.php>
 
 # Getting Started
-
 All of the values listed in the example below represent the default values for their respective configuration item.
-
 You can simply do this:
-
 ```javascript
-const NodeClam = require('clamscan');
+const NodeClam = require('clamscam-linwin');
 const ClamScan = new NodeClam().init();
 ```
-
 And, you'll be good to go.
 
 **BUT**: If you want more control, you can specify all sorts of options.
 
 ```javascript
-const NodeClam = require('clamscan');
+const NodeClam = require('clamscam-linwin');
 const ClamScan = new NodeClam().init({
     removeInfected: false, // If true, removes infected files
     quarantineInfected: false, // False: Don't quarantine, Path: Moves files to this place.
@@ -140,7 +130,7 @@ const ClamScan = new NodeClam().init({
 Here is a _non-default values example_ (to help you get an idea of what proper-looking values could be):
 
 ```javascript
-const NodeClam = require('clamscan');
+const NodeClam = require('clamscam-linwin');
 const ClamScan = new NodeClam().init({
     removeInfected: true, // Removes files if they are infected
     quarantineInfected: '~/infected/', // Move file here. removeInfected must be FALSE, though.
@@ -199,7 +189,7 @@ For the sake of brevity, all the examples in the [API](#api) section will be sho
 **Below is the _full_ example of how you could get that instance and run some methods:**
 
 ```javascript
-const NodeClam = require('clamscan');
+const NodeClam = require('clamscam-linwin');
 const ClamScan = new NodeClam().init(options);
 
 // Get instance by resolving ClamScan promise object
@@ -209,7 +199,7 @@ ClamScan.then(async clamscan => {
         const version = await clamscan.getVersion();
         console.log(`ClamAV Version: ${version}`);
 
-        const {isInfected, file, viruses} = await clamscan.isInfected('/some/file.zip');
+        const { isInfected, file, viruses } = await clamscan.isInfected('/some/file.zip');
         if (isInfected) console.log(`${file} is infected with ${viruses}!`);
     } catch (err) {
         // Handle any errors raised by the code in the try block
@@ -222,9 +212,9 @@ ClamScan.then(async clamscan => {
 **If you're writing your code within an async function, getting an instance can be one less step:**
 
 ```javascript
-const NodeClam = require('clamscan');
+const NodeClam = require('clamscam-linwin');
 
-async some_function() {
+async function some_function() {
     try {
         // Get instance by resolving ClamScan promise object
         const clamscan = await new NodeClam().init(options);
@@ -386,7 +376,7 @@ The `goodFiles` and `badFiles` parameters of the `endCallback` callback in this 
 ### Callback Example
 
 ```javascript
-clamscan.scanDir('/some/path/to/scan', (err, goodFiles, badFiles, viruses) {
+clamscan.scanDir('/some/path/to/scan', (err, goodFiles, badFiles, viruses) => {
     if (err) return console.error(err);
 
     if (badFiles.length > 0) {
@@ -548,7 +538,7 @@ This method allows you to scan a binary stream. **NOTE**: This method will only 
 **Callback Example:**
 
 ```javascript
-const NodeClam = require('clamscan');
+const NodeClam = require('clamscam-linwin');
 
 // You'll need to specify your socket or TCP connection info
 const clamscan = new NodeClam().init({
@@ -565,7 +555,7 @@ rs.push('foooooo');
 rs.push('barrrrr');
 rs.push(null);
 
-clamscan.scanStream(stream, (err, { isInfected. viruses }) => {
+clamscan.scanStream(stream, (err, { isInfected, viruses }) => {
     if (err) return console.error(err);
     if (isInfected) return console.log('Stream is infected! Booo!', viruses);
     console.log('Stream is not infected! Yay!');
@@ -580,7 +570,7 @@ clamscan.scanStream(stream).then(({isInfected}) => {
     console.log("Stream is not infected! Yay!");
 }).catch(err => {
     console.error(err);
-};
+});
 ```
 
 **Promise Example:**
@@ -604,7 +594,7 @@ Please note that this method is different than all the others in that it returns
 ### Example
 
 ```javascript
-const NodeClam = require('clamscan');
+const NodeClam = require('clamscam-linwin');
 
 // You'll need to specify your socket or TCP connection info
 const clamscan = new NodeClam().init({
@@ -616,7 +606,7 @@ const clamscan = new NodeClam().init({
 });
 
 // For example's sake, we're using the Axios module
-const axios = require('Axios');
+const axios = require('axios');
 
 // Get a readable stream for a URL request
 const input = axios.get(some_url);
