@@ -64,7 +64,7 @@ jobs:
           sudo systemctl status clamav-daemon
           until [ -S $(cat /etc/clamav/clamd.conf |grep "LocalSocket "|cut -d ' ' -f 2) ]; do sleep 1; done
       - name: Run tests
-        run: npm test-linux
+        run: npm run test-linux
         env:
           NODE_EXTRA_CA_CERTS: /usr/local/share/ca-certificates/snakeoil.crt
       - name: debug?
