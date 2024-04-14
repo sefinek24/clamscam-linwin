@@ -1480,9 +1480,6 @@ class NodeClam {
 
 			// Use this method when scanning using local binaries
 			const localScan = async (allFiles) => {
-				console.debug(allFiles);
-				// Get array of escaped file names
-
 				// Build the actual command purely for debugging purposes
 				const command = `${self.settings[self.scanner].path} ${self._buildClamArgs(allFiles).join(' ')}`;
 				if (self.settings.debugMode)console.log(`${self.debugLabel}: Configured clam command: ${command}`);
