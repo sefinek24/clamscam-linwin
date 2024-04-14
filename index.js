@@ -801,8 +801,7 @@ class NodeClam {
 		let hasCb = false;
 
 		// Verify second param, if supplied, is a function
-		if (cb && typeof cb !== 'function')
-		{throw new NodeClamError('Invalid cb provided to scanStream. Second parameter must be a function!');}
+		if (cb && typeof cb !== 'function') throw new NodeClamError('Invalid cb provided to scanStream. Second parameter must be a function!');
 
 		// Making things simpler
 		if (cb && typeof cb === 'function') hasCb = true;
@@ -817,7 +816,7 @@ class NodeClam {
 
 				// Execute the clam binary with the proper flags
 				try {
-					const { stdout, stderr } = await cpExecFile(`${self.settings[self.scanner].path}`, args);
+					const { stdout, stderr } = await cpExecFile(self.settings[self.scanner].path, args);
 
 					if (stderr) {
 						const err = new NodeClamError({ stderr, file: null }, 'ClamAV responded with an unexpected response when requesting version.');
@@ -900,9 +899,7 @@ class NodeClam {
 
 		// Verify second param, if supplied, is a function
 		if (cb && typeof cb !== 'function') {
-			throw new NodeClamError(
-				'Invalid cb provided to isInfected. Second parameter, if provided, must be a function!',
-			);
+			throw new NodeClamError('Invalid cb provided to isInfected. Second parameter, if provided, must be a function!');
 		} else if (cb && typeof cb === 'function') {
 			hasCb = true;
 		}
@@ -912,7 +909,7 @@ class NodeClam {
 		// eslint-disable-next-line consistent-return
 		return new Promise(async (resolve, reject) => {
 			// Verify string is passed to the file parameter
-			if (typeof file !== 'string' || (typeof file === 'string' && file.trim() === '')) {
+			if (typeof file !== 'string' || file.trim() === '') {
 				const err = new NodeClamError({ file }, 'Invalid or empty file name provided.');
 				return hasCb ? cb(err, file, null, []) : reject(err);
 			}
@@ -1483,15 +1480,15 @@ class NodeClam {
 
 			// Use this method when scanning using local binaries
 			const localScan = async (allFiles) => {
+				console.debug(allFiles);
 				// Get array of escaped file names
-				const items = allFiles.map();
 
 				// Build the actual command purely for debugging purposes
-				const command = `${self.settings[self.scanner].path} ${self._buildClamArgs(items).join(' ')}`;
+				const command = `${self.settings[self.scanner].path} ${self._buildClamArgs(allFiles).join(' ')}`;
 				if (self.settings.debugMode)console.log(`${self.debugLabel}: Configured clam command: ${command}`);
 
 				// Execute the clam binary with the proper flags
-				execFile(self.settings[self.scanner].path, self._buildClamArgs(items), (err, stdout, stderr) => {
+				execFile(self.settings[self.scanner].path, self._buildClamArgs(allFiles), (err, stdout, stderr) => {
 					if (self.settings.debugMode) console.log(`${this.debugLabel}: stdout:`, stdout);
 
 					// Exit code 1 just means "virus found". This is not an "error".
