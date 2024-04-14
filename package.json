@@ -1,9 +1,26 @@
 {
     "name": "clamscam-linwin",
     "version": "3.0.0",
-    "author": "Kyle Farris <kyle.farris@infotechinc.com> (https://infotechinc.com)",
     "description": "Use Node.js to scan files on your server with ClamAV's clamscan/clamdscan binary or via TCP to a remote server or local UNIX Domain socket. This is especially useful for scanning uploaded files provided by un-trusted sources.",
-    "main": "index.js",
+    "keywords": [
+        "clamav",
+        "virus",
+        "clamscan",
+        "upload",
+        "virus scanning",
+        "clam",
+        "clamd",
+        "security"
+    ],
+    "bugs": {
+        "url": "https://github.com/sefinek24/clamscam-linwin/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:sefinek24/clamscam-linwin.git"
+    },
+    "license": "MIT",
+    "author": "Kyle Farris <kyle.farris@infotechinc.com> (https://infotechinc.com)",
     "contributors": [
         "dietervds",
         "nicolaspeixoto",
@@ -15,36 +32,19 @@
         "caroneater <Gabriel Fournier>",
         "Sefinek <contact@sefinek.net (https://sefinek.net)"
     ],
+    "main": "index.js",
     "scripts": {
-        "test-win": "make test-win",
         "test-linux": "make test-linux",
+        "test-win": "make test-win",
         "up": "ncu -u && npm install && npm update && npm audit fix"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:sefinek24/clamscam-linwin.git"
-    },
-    "keywords": [
-        "clamav",
-        "virus",
-        "clamscan",
-        "upload",
-        "virus scanning",
-        "clam",
-        "clamd",
-        "security"
-    ],
-    "license": "MIT",
-    "engines": {
-        "node": ">=16.0.0"
-    },
-    "bugs": {
-        "url": "https://github.com/sefinek24/clamscam-linwin/issues"
     },
     "devDependencies": {
         "axios": "^1.6.8",
         "chai-as-promised": "^7.1.1",
         "jsdoc-to-markdown": "^8.0.1",
         "mocha": "^10.4.0"
+    },
+    "engines": {
+        "node": ">=16.0.0"
     }
 }
