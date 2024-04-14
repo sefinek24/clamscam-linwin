@@ -1484,7 +1484,7 @@ class NodeClam {
 			// Use this method when scanning using local binaries
 			const localScan = async (allFiles) => {
 				// Get array of escaped file names
-				const items = allFiles.map((file) => file.replace(/ /g, '\\ '));
+				const items = allFiles.map();
 
 				// Build the actual command purely for debugging purposes
 				const command = `${self.settings[self.scanner].path} ${self._buildClamArgs(items).join(' ')}`;
@@ -1515,8 +1515,7 @@ class NodeClam {
 								.split(os.EOL)
 								.map((errLine) => {
 									const match = errLine.match(/^ERROR: Can't access file (.*)$/);
-									if (match !== null && match.length > 1 && typeof match[1] === 'string')
-									{return { [match[1]]: 'Can\'t access file.' };}
+									if (match !== null && match.length > 1 && typeof match[1] === 'string') return { [match[1]]: 'Can\'t access file.' };
 									return null;
 								})
 								.filter(Boolean);
@@ -2009,7 +2008,7 @@ class NodeClam {
 						}
 
 						// Get the proper recursive list of files from the path
-						const files = stdout.split('\n').map((p) => p.replace(/ /g, '\\ '));
+						const files = stdout.split('\n');
 
 						// Send files to remote server in parallel chunks of 10
 						const chunkSize = 10;
